@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.bean">
+	<class name="Orders">
+		<id name="orderId">
+			<generator class="increment"/>
+		</id> 
+		<property name="bookId"/>
+		<set name="userSet" table="orderuser" inverse="true" lazy="false">
+			<key column="orderId"/>
+			<many-to-many class="User" column="userId"/>
+		</set>
+	</class>
+</hibernate-mapping>

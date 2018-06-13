@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+        <context:component-scan base-package="com"/>
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+       	 <property name="prefix" value="/"></property>
+       	 <property name="suffix" value=".jsp"></property>
+        </bean>	 
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		</bean>
+		<bean id="interceptor1" class="com.interceptor.MyInterceptor"/>
+		<bean id="interceptor2" class="com.interceptor.MyInterceptor2"/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/jiaShopcur.do"/>
+			<ref bean="interceptor1"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/gerenxinxi.do"/>
+			<ref bean="interceptor1"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/shopcurList.do"/>
+			<ref bean="interceptor1"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/jiaOrders.do"/>
+			<ref bean="interceptor2"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/Orderslist.do"/>
+			<ref bean="interceptor2"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver"> </property>
+			<property name="url" value="jdbc:mysql://localhost:3306/hsbookshop?characterEncoding=utf8"></property>
+			<property name="username" value="root"></property>
+			<property name="password" value=""></property>
+		</bean>
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		    <property name="dataSource" ref="dataSource"/>
+		</bean>
+		
+		<tx:annotation-driven transaction-manager="txManager"/>
+</beans>

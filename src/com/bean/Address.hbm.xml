@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.bean">
+	<class name="Address">
+		<id name="addressId">
+			<generator class="foreign">
+				<param name="property">User</param>
+			</generator>
+		</id> 
+		<property name="state"/>
+		<property name="city"/>
+		<property name="street"/>
+		<one-to-one name="User" constrained="true"/>
+	</class> 
+</hibernate-mapping>
